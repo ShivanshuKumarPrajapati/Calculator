@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    let t=0;
+    let  checkOperator=0;
+    let checkEquality=0;
     let res=0;
     let buffer = "0";
     let previousOperator;
@@ -8,7 +9,10 @@ $(document).ready(function(){
         var a=$(event.target);
         var b=a.text();
         if(isNaN(b))
+        {
+        console.log(b);
         operation(b);
+        }
         else
         numbers(b);
         $('#screen').text(buffer);
@@ -20,11 +24,15 @@ $(document).ready(function(){
     {
         if(buffer == '0')
         buffer = digit;
+        else if (checkEquality==1 && checkOperator==0)
+        {
+        buffer = digit;
+        checkEquality=0;
+        }
         else
         {
             buffer+=digit;
         }
-        console.log(buffer);
         $('#screen').text(buffer);
     }
 
@@ -39,6 +47,8 @@ $(document).ready(function(){
                 $('#screen').text(buffer);
                 break;
             case '=':
+                checkOperator=0;
+                checkEquality=1;
                 if(previousOperator === null)
                 alert('Invalid operation');
                 else
@@ -49,19 +59,28 @@ $(document).ready(function(){
                 res=0;
                 }
                 break;
+            case '←':
+                if(buffer.length === 1)
+                buffer='0';
+                else
+                buffer=buffer.substring(0,buffer.length-1);
+                break;
+            case '-':
             case '÷':
             case '+':
             case '×':
-            case '-':
+            case  '%':
+                checkOperator=1;
                 calculation(operator);
                 break;
         }
     }
     function calculation(symbol)
     {
+        console.log(symbol);
         if(buffer === '0')
         {
-        alert('Enter the value first');
+        alert('Enter the value !');
         return;
         }
             const intBuffer = parseInt(buffer)
@@ -85,10 +104,12 @@ $(document).ready(function(){
         res-=intBuffer;
         else if (previousOperator === '×')
         res*=intBuffer;
+        else if(previousOperator === '%')
+        res%=intBuffer;
         else
         res/=intBuffer;
     }
     $('.child-item').click(function(event){
-        buttonClick(event)
+        buttonClick(event);
     })
 })
