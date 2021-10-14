@@ -2,8 +2,8 @@ body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
+
 
 .prnt{
     height: 100vh;
@@ -52,6 +52,7 @@ body{
     display: flex;
     white-space: nowrap;
     overflow:auto hidden;
+    scrollbar-width: thin;
     display: block;
     text-overflow:clip;
     font-size: xx-large;
@@ -74,3 +75,9 @@ body{
     color:white;
     border: none;
 }
+.operator:hover{
+     background-color: rgb(247, 67, 2);
+}
+
+
+
